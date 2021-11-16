@@ -452,10 +452,6 @@ void zinfo_for_kptr(void *kptr){
     kprintf("\tbzero elems on free?      %d\n", zone->z_free_zeroes);
     kprintf("\n");
 
-    struct zone_page_metadata *empty_meta = zone_pva_to_meta(zone->z_pageq_empty);
-    struct zone_page_metadata *partial_meta = zone_pva_to_meta(zone->z_pageq_partial);
-    struct zone_page_metadata *full_meta = zone_pva_to_meta(zone->z_pageq_full);
-
     kprintf("empty:\n");
     zlist_dump(zone->z_pageq_empty);
 
@@ -466,6 +462,10 @@ void zinfo_for_kptr(void *kptr){
     kprintf("\n");
     kprintf("full:\n");
     zlist_dump(zone->z_pageq_full);
+
+    kprintf("\n");
+    kprintf("depopulated VA:\n");
+    zlist_dump(zone->z_pageq_va);
 }
 
 void hookme_hook(void *arg){
